@@ -1,0 +1,21 @@
+body {
+    background-color: purple;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h2,
+h1 {
+    font-family: 'righteous', sans-serif;
+}
+
+#header {
+    font-size: 3rem;
+}
+
+.book-list {
+    margin-top: 50px;
+    visibility: hidden;
+}
