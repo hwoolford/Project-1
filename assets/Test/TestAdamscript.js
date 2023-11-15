@@ -1,5 +1,6 @@
 
-// const typeArray = [item, title, author, publisher, booklink, bookImg]
+// const { title } = book;
+const coverPath = "https://covers.openlibrary.org/b/olid/"
 const outputlist = $("#list-output");
 
 const placeHldr = ""
@@ -21,10 +22,25 @@ $("#search").on("click", function () {
                 else {
                     for (let index = 0; index < res.works.length; index++) {
                         const book = res.works[index];
-                        const img = $("<img>");
-                        img.attr("src", "https://covers.openlibrary.org/b/olid/" + book.cover_edition_key + "-M.jpg");
-                        outputlist.append(img);
+                        const bookEl = document.createElement("div");
+                        // const img = $("<img>");
+                        // const bookTitle = book.title
+                        // console.log(bookTitle)
+                        // img.attr("src", "https://covers.openlibrary.org/b/olid/" + book.cover_edition_key + "-M.jpg");
+                        // outputlist.append(img);
+                        // outputlist.innerHTML = bookTitle
+
+                        bookEl.innerHTML = `
+            <h2>${book.title}</h2>
+            <div class = "bookInfo">
+            <img src="https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg" />
+           
+            </div>
+                `;
+
+                        outputlist.append(bookEl);
                     }
+
                     console.log(res)
                 }
             },
@@ -37,11 +53,5 @@ $("#search").on("click", function () {
     $("#search-box").val("");
 });
 
-// function to display results in index.html @param res
-function displayResults(res) {
-    for (var i = 0; i < res.items.length; i += 2) {
-        item = res.items[i];
-        title1
-    }
-}
+
 
