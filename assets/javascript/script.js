@@ -3,6 +3,12 @@ const form = document.getElementById("user-form");
 let formInput = document.getElementById("search-input");
 const main = document.getElementById("main");
 const tableBody = document.getElementById("table");
+const outputList = document.getElementById("list-output")
+const row = document.getElementsByClassName("row")
+const bookList = document.getElementsByClassName("book-list")
+
+const placeHldr = "";
+let searchData;
 
 const movieAuth = {
   method: "GET",
@@ -20,8 +26,7 @@ function findMovies(search) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data.results);
-      showMovies(data.results);      
+      showMovies(data.results);
     });
 }
 
@@ -68,12 +73,43 @@ function showMovies(movies) {
   });
 }
 
+function findBooks(search) {
+  const bookURL = `https://openlibrary.org/subjects/${search}.json`;
+    fetch(bookURL)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.works);
+        if (data.works === 0) {
+          alert("no results.. try again");
+        } else {
+          outputList.innerHTML = "";
+          data.works.forEach((book) => {
+            const bookEl = document.createElement("div");
+            bookEl.innerHTML = `
+              <h2>${book.title}</h2>
+              <div class="bookInfo">
+                <img src="https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg" />
+              </div>
+            `;
+            outputList.append(bookEl);
+          
+          });
+          console.log(data);
+        }
+      })
+      .catch((error) => {
+        alert("Something went wrong..."); //change to modal or something
+        console.log(error)
+      });
+}
+
 form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  event.preventDefault();
   const searchInput = formInput.value;
-  localStorage.setItem("searchTerm", JSON.stringify(searchInput))
+  localStorage.setItem("searchTerm", JSON.stringify(searchInput));
   if (searchInput && searchInput !== "") {
     findMovies(searchInput);
+    findBooks(searchInput);
     showHistory();
   } else {
     alert("Please enter a search term"); //change to modal or something
@@ -81,21 +117,23 @@ form.addEventListener("submit", function (event) {
 });
 
 let showHistory = function () {
-    let storedHistory = JSON.parse(localStorage.getItem("searchTerm"))
-    const searchInput = formInput.value
-    let createTableRow = document.createElement("tr");
-      createTableRow.setAttribute("id", "tableRow")
-      let tableData = document.createElement("td");
-      let searchHistory = document.createElement("a");
-      searchHistory.setAttribute("id", "input");
-      $("#search-input").val("");
-      searchHistory.textContent = storedHistory;
-      tableData.appendChild(searchHistory);
-      createTableRow.appendChild(tableData);
-      tableBody.appendChild(createTableRow);
+  let storedHistory = JSON.parse(localStorage.getItem("searchTerm"));
+  const searchInput = formInput.value;
+  let createTableRow = document.createElement("tr");
+  createTableRow.setAttribute("id", "tableRow");
+  let tableData = document.createElement("td");
+  let searchHistory = document.createElement("a");
+  searchHistory.setAttribute("id", "input");
+  $("#search-input").val("");
+  searchHistory.textContent = storedHistory;
+  tableData.appendChild(searchHistory);
+  createTableRow.appendChild(tableData);
+  tableBody.appendChild(createTableRow);
 
-      searchHistory.addEventListener("click", function () {
-        findMovies(searchInput);
-      });
-    };
-    
+  searchHistory.addEventListener("click", function () {
+    findMovies(searchInput);
+    findBooks(searchInput);
+  });
+};
+
+
