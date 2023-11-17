@@ -75,45 +75,53 @@ function showMovies(movies) {
 
 function findBooks(search) {
   const bookURL = `https://openlibrary.org/subjects/${search}.json`;
-    fetch(bookURL)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.works);
-        if (data.works === 0) {
-          alert("no results.. try again");
-        } else {
-          outputList.innerHTML = "";
-          data.works.forEach((book) => {
-            const bookEl = document.createElement("div");
-            bookEl.innerHTML = `
+  fetch(bookURL)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.works);
+      if (data.works === 0) {
+        alert("no results.. try again");
+      } else {
+        outputList.innerHTML = "";
+        data.works.forEach((book) => {
+          const bookEl = document.createElement("div");
+          bookEl.innerHTML = `
               <h2>${book.title}</h2>
               <div class="bookInfo">
                 <img src="https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg" />
               </div>
             `;
-            outputList.append(bookEl);
-          
-          });
-          console.log(data);
-        }
-      })
-      .catch((error) => {
-        alert("Something went wrong..."); //change to modal or something
-        console.log(error)
-      });
+          outputList.append(bookEl);
+
+        });
+        console.log(data);
+      }
+    })
+    .catch((error) => {
+      alert("Something went wrong..."); //change to modal or something
+      console.log(error)
+    });
 }
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const searchInput = formInput.value;
   localStorage.setItem("searchTerm", JSON.stringify(searchInput));
+  const searchTerm = JSON.parse(localStorage.getItem("searchTerm"));
   if (searchInput && searchInput !== "") {
     findMovies(searchInput);
     findBooks(searchInput);
     showHistory();
-  } else {
-    alert("Please enter a search term"); //change to modal or something
+  } if (!searchTerm) {
+    const modal = document.getElementById('myModal');
+    modal.classList.add('is-active');
+
   }
+  const closeButton = document.querySelector('.modal-close');
+  closeButton.addEventListener('click', function () {
+    const modal = document.getElementById('myModal');
+    modal.classList.remove('is-active');
+  });
 });
 
 let showHistory = function () {
