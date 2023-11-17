@@ -1,9 +1,9 @@
 const imagePath = "https://image.tmdb.org/t/p/w154/";
 const form = document.getElementById("user-form");
 let formInput = document.getElementById("search-input");
-const main = document.getElementById("main");
+const main = document.getElementById("main_movie");
 const tableBody = document.getElementById("table");
-const outputList = document.getElementById("list-output")
+const outputList = document.getElementById("book-output")
 const row = document.getElementsByClassName("row")
 const bookList = document.getElementsByClassName("book-list")
 
@@ -39,7 +39,7 @@ function showMovies(movies) {
       movieEl.innerHTML = `
       <h2>${title}</h2>
       <div class = "movieInfo">
-      <img id="placeholder" src="./placeholder.png" alt ="${title}" /> 
+      <img id="placeholder" src="./assets/images/StorySeeker_placeholder_image.png" alt ="${title}" /> 
       <div class="overview">
       <h3>Overview</h3>
       ${overview}
@@ -50,7 +50,7 @@ function showMovies(movies) {
       movieEl.innerHTML = `
       <h2>${title}</h2>
       <div class = "movieInfo">
-      <img id="placeholder" src="./placeholder.png" alt ="${title}" /> 
+      <img src="${imagePath + poster_path}" alt ="${title}" />
       <div class="overview">
       <h3>Overview</h3>
       <p><i>Overview is not available<i></p>
