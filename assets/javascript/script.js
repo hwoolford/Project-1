@@ -5,7 +5,7 @@ const main = document.getElementById("main_movie");
 const tableBody = document.getElementById("table");
 const outputList = document.getElementById("book-output")
 const row = document.getElementsByClassName("row")
-const bookList = document.getElementsByClassName("book-list")
+
 
 const placeHldr = "";
 let searchData;
