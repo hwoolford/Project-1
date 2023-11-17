@@ -3,9 +3,9 @@ const form = document.getElementById("user-form");
 let formInput = document.getElementById("search-input");
 const main = document.getElementById("main");
 const tableBody = document.getElementById("table");
-const outputList = document.getElementById("list-output")
-const row = document.getElementsByClassName("row")
-const bookList = document.getElementsByClassName("book-list")
+const outputList = document.getElementById("list-output");
+const row = document.getElementsByClassName("row");
+const bookList = document.getElementsByClassName("book-list");
 
 const placeHldr = "";
 let searchData;
@@ -39,7 +39,7 @@ function showMovies(movies) {
       movieEl.innerHTML = `
       <h2>${title}</h2>
       <div class = "movieInfo">
-      <img id="placeholder" src="./placeholder.png" alt ="${title}" /> 
+      <img id="placeholder" src="./assets/images/placeholder.png" alt ="${title}" /> 
       <div class="overview">
       <h3>Overview</h3>
       ${overview}
@@ -50,7 +50,7 @@ function showMovies(movies) {
       movieEl.innerHTML = `
       <h2>${title}</h2>
       <div class = "movieInfo">
-      <img id="placeholder" src="./placeholder.png" alt ="${title}" /> 
+      <img src="${imagePath + poster_path}" alt ="${title}" />
       <div class="overview">
       <h3>Overview</h3>
       <p><i>Overview is not available<i></p>
@@ -75,38 +75,39 @@ function showMovies(movies) {
 
 function findBooks(search) {
   const bookURL = `https://openlibrary.org/subjects/${search}.json`;
-    fetch(bookURL)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.works);
-        if (data.works === 0) {
-          alert("no results.. try again");
-        } else {
-          outputList.innerHTML = "";
-          data.works.forEach((book) => {
-            const bookEl = document.createElement("div");
-            bookEl.innerHTML = `
+  fetch(bookURL)
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data.works);
+      if (data.works === 0) {
+        alert("no results.. try again");
+      } else {
+        outputList.innerHTML = "";
+        data.works.forEach((book) => {
+          const bookEl = document.createElement("div");
+          bookEl.innerHTML = `
               <h2>${book.title}</h2>
               <div class="bookInfo">
                 <img src="https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg" />
               </div>
             `;
-            outputList.append(bookEl);
-          
-          });
-          console.log(data);
-        }
-      })
-      .catch((error) => {
-        alert("Something went wrong..."); //change to modal or something
-        console.log(error)
-      });
+          outputList.append(bookEl);
+        });
+        // console.log(data);
+      }
+    })
+    .catch((error) => {
+      alert("Something went wrong..."); //change to modal or something
+      console.log(error);
+    });
 }
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const searchInput = formInput.value;
-  localStorage.setItem("searchTerm", JSON.stringify(searchInput));
+  let storedHistory = JSON.parse(localStorage.getItem("searchTerm")) || [];
+  storedHistory.push(searchInput);
+  localStorage.setItem("searchTerm", JSON.stringify(storedHistory));
   if (searchInput && searchInput !== "") {
     findMovies(searchInput);
     findBooks(searchInput);
@@ -118,22 +119,30 @@ form.addEventListener("submit", function (event) {
 
 let showHistory = function () {
   let storedHistory = JSON.parse(localStorage.getItem("searchTerm"));
-  const searchInput = formInput.value;
-  let createTableRow = document.createElement("tr");
-  createTableRow.setAttribute("id", "tableRow");
-  let tableData = document.createElement("td");
-  let searchHistory = document.createElement("a");
-  searchHistory.setAttribute("id", "input");
-  $("#search-input").val("");
-  searchHistory.textContent = storedHistory;
-  tableData.appendChild(searchHistory);
-  createTableRow.appendChild(tableData);
-  tableBody.appendChild(createTableRow);
+  tableBody.innerHTML = "";
+  if (storedHistory) {
+  for (let i = 0; i < storedHistory.length; i++) {
+    let history = storedHistory[i];
+    let createTableRow = document.createElement("tr");
+    createTableRow.setAttribute("id", "tableRow");
+    let tableData = document.createElement("td");
+    let searchHistory = document.createElement("a");
+    searchHistory.setAttribute("id", "input");
+    $("#search-input").val("");
+    searchHistory.textContent = history;
+    tableData.appendChild(searchHistory);
+    createTableRow.appendChild(tableData);
+    tableBody.appendChild(createTableRow);
 
-  searchHistory.addEventListener("click", function () {
-    findMovies(searchInput);
-    findBooks(searchInput);
-  });
+    searchHistory.addEventListener("click", function () {
+      let clickedTerm = this.textContent;
+      findMovies(clickedTerm);
+      findBooks(clickedTerm);
+    });
+  }
+} else {
+
+}
 };
 
-
+showHistory();
