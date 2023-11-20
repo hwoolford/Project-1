@@ -5,7 +5,7 @@ const main = document.getElementById("main");
 const tableBody = document.getElementById("table");
 const outputList = document.getElementById("list-output")
 const row = document.getElementsByClassName("row")
-const bookList = document.getElementsByClassName("book-list")
+// const bookList = document.getElementsByClassName("book-list")
 
 const placeHldr = "";
 let searchData;
@@ -73,14 +73,27 @@ function showMovies(movies) {
   });
 }
 
+const modal = document.getElementById('myModal');
+const openModalButton = document.getElementById('openModalButton');
+const closeModalButton = document.querySelector('.modal-close');
+
+openModalButton.addEventListener('click', () => {
+  modal.classList.add('is-active');
+});
+
+closeModalButton.addEventListener('click', () => {
+  modal.classList.remove('is-active');
+});
+
 function findBooks(search) {
   const bookURL = `https://openlibrary.org/subjects/${search}.json`;
+
   fetch(bookURL)
     .then((response) => response.json())
     .then((data) => {
       console.log(data.works);
       if (data.works === 0) {
-        alert("no results.. try again");
+        modal.classList.add('is-active'); // Open the modal
       } else {
         outputList.innerHTML = "";
         data.works.forEach((book) => {
