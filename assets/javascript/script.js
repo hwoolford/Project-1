@@ -74,6 +74,7 @@ function showMovies(movies) {
 
 const modal = document.getElementById('myModal');
 const openModalButton = document.getElementById('openModalButton');
+openModalButton.style.display = 'none';
 const closeModalButton = document.querySelector('.modal-close');
 
 openModalButton.addEventListener('click', () => {
@@ -83,15 +84,22 @@ openModalButton.addEventListener('click', () => {
 closeModalButton.addEventListener('click', () => {
   modal.classList.remove('is-active');
 });
+// Select the modal element and store it in a variable
+const modal1 = document.getElementById("modal");
+
+// Add an event listener to the modal close button
+const modalCloseButton = modal.querySelector(".modal-close");
+modalCloseButton.addEventListener("click", () => {
+  modal.classList.remove("is-active");
+});
 
 function findBooks(search) {
   const bookURL = `https://openlibrary.org/subjects/${search}.json`;
-
   fetch(bookURL)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.works);
-      if (data.works === 0) {
+      // console.log(data.works);
+      if (data.works.length === 0) {
         modal.classList.add('is-active'); // Open the modal
       } else {
         outputList.innerHTML = "";
@@ -103,22 +111,26 @@ function findBooks(search) {
                 <img src="https://covers.openlibrary.org/b/olid/${book.cover_edition_key}-M.jpg" />
               </div>
             `;
-            outputList.append(bookEl);
-          
-          });
-          console.log(data);
-        }
-      })
-      .catch((error) => {
-        alert("Something went wrong..."); //change to modal or something
-        console.log(error)
-      });
+          outputList.append(bookEl);
+        });
+        // console.log(data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   const searchInput = formInput.value;
   let storedHistory = JSON.parse(localStorage.getItem("searchTerm")) || [];
+
+  if (!Array.isArray(storedHistory)) {
+    storedHistory = [];
+  }
+
+
   if (!storedHistory.includes(searchInput)) {
     storedHistory.push(searchInput);
   }
@@ -127,44 +139,38 @@ form.addEventListener("submit", function (event) {
     findMovies(searchInput);
     findBooks(searchInput);
     showHistory();
-  } if (!searchTerm) {
-    const modal = document.getElementById('myModal');
-    modal.classList.add('is-active');
-
+  } else {
+    // Open the modal instead of showing an alert
+    modal.classList.add("is-active");
   }
-  const closeButton = document.querySelector('.modal-close');
-  closeButton.addEventListener('click', function () {
-    const modal = document.getElementById('myModal');
-    modal.classList.remove('is-active');
-  });
 });
 
 let showHistory = function () {
   let storedHistory = JSON.parse(localStorage.getItem("searchTerm"));
   tableBody.innerHTML = "";
   if (storedHistory) {
-  for (let i = 0; i < storedHistory.length; i++) {
-    let history = storedHistory[i];
-    let createTableRow = document.createElement("tr");
-    createTableRow.setAttribute("id", "tableRow");
-    let tableData = document.createElement("td");
-    let searchHistory = document.createElement("a");
-    searchHistory.setAttribute("id", "input");
-    $("#search-input").val("");
-    searchHistory.textContent = history;
-    tableData.appendChild(searchHistory);
-    createTableRow.appendChild(tableData);
-    tableBody.appendChild(createTableRow);
+    for (let i = 0; i < storedHistory.length; i++) {
+      let history = storedHistory[i];
+      let createTableRow = document.createElement("tr");
+      createTableRow.setAttribute("id", "tableRow");
+      let tableData = document.createElement("td");
+      let searchHistory = document.createElement("a");
+      searchHistory.setAttribute("id", "input");
+      $("#search-input").val("");
+      searchHistory.textContent = history;
+      tableData.appendChild(searchHistory);
+      createTableRow.appendChild(tableData);
+      tableBody.appendChild(createTableRow);
 
-    searchHistory.addEventListener("click", function () {
-      let clickedTerm = this.textContent;
-      findMovies(clickedTerm);
-      findBooks(clickedTerm);
-    });
+      searchHistory.addEventListener("click", function () {
+        let clickedTerm = this.textContent;
+        findMovies(clickedTerm);
+        findBooks(clickedTerm);
+      });
+    }
+  } else {
+
   }
-} else {
-
-}
 };
 
 showHistory();
