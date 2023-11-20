@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Story Seeker Biblio-Cinephiles</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    
 
 </head>
 
@@ -41,58 +42,70 @@
 
     </div>
     <!-- Results, Movies on the left and Books on the right -->
-    <main id="main">
+    <main>
+      <div class="columns">
+        <div id="book-output" class="column"></div>
+        <div id="main_movie" class="column"></div>
+      </div>
+    <!-- <div class = "row">
+    <div id="main_movie" class = "column">
+    <h4>Your movie:</h4> 
+    <div class="card">
+        <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Movie_poster" style="width:12.5%">
+      </div>
+        <div class="container">
+          <h4><b>Movie title</b></h4>
+          <p>Movie description</p>
+        </div>
+      </div>
+    <div class = "column">
+    <h5>Your book:</h5>
+    <div class="book-list">
+        <h2 class="text-text"></h2>
+        <div id="book-output">
+            <div class="row"></div>
+        </div>
+    </div>
+  </div>
+    <div>
+      <table id="table"></table>
+    </div>
+    <div class="card">
+        <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Book_cover" style="width:12.5%">
+        <div class="container">
+          <h4><b>Book title</b></h4>
+          <p>Book description</p>
+        </div>
+      </div>
+    </div> -->
 
-        <h3> Results: </h3>
-        <h4>Your movie:</h4>
+
+    <div class="row">
+      <div class="column" style="background-color:#aaa;">
+        <h2>Your movies</h2>
         <div class="card">
-            <img src="./assets/images/placeholder.png" alt="Movie_poster" style="width:25%">
-            <div class="container">
-                <h4><b>Movie title</b></h4>
-                <p>Movie description</p>
-            </div>
+          <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Movie_poster" style="width:12.5%">
         </div>
-        <h5>Your book:</h5>
-        <div id="main"></div>
-        <div class="book-list">
-            <h2 class="text-text"></h2>
-            <div id="list-output">
-                <div class="row"></div>
-            </div>
-        </div>
-        <div>
-            <table id="table"></table>
-        </div>
-        <div class="card">
-            <img src="./assets/images/placeholder.png" alt="Book_cover" style="width:25%">
-            <div class="container">
-                <h4><b>Book title</b></h4>
-                <p>Book description</p>
-            </div>
+          <div class="container">
+            <h4><b>Movie title</b></h4>
+            <p>Movie description</p>
+          </div>
         </div>
 
-        <div id="myModal" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="box">
-                    <p>Please enter a search term</p>
-                </div>
+      </div>
+      <div class="column" style="background-color:#bbb;">
+        <h2>Your books</h2>
+        
+    
+        <div class="card">
+            <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Book_cover" style="width:12.5%">
+            <div class="container">
+              <h4><b>Book title</b></h4>
+              <p>Book description</p>
             </div>
-            <button class="modal-close is-large" aria-label="close"></button>
-        </div>
-        <div id="myModal" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="box">
-                    <p>No results... try again</p>
-                </div>
-            </div>
-            <button class="modal-close is-large" aria-label="close"></button>
-        </div>
-        <button id="openModalButton">Open Modal</button>
-        <div id="myModal" class="modal">
-            <!-- Modal content goes here -->
-        </div>
+          </div>
+      </div>
+    </div>
     </main>
     <!-- Div, Search term history -->
 

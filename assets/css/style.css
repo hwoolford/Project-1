@@ -50,17 +50,19 @@ h4 {
   padding: 2px 16px;
 }
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: rgb(218, 104, 104);
-  color: aliceblue;
-  text-align: center;
-}
+  footer{  position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:  rgb(218, 104, 104);
+    color: aliceblue;
+    text-align: center;
+  }
 
-.column {
-  float: left;
-  width: 50%;
-}
+  .column {
+    float: left;
+    width: 50%;
+  }
+  
+  /* Clear floats after the columns */
+ 
