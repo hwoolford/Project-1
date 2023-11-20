@@ -13,7 +13,9 @@ This project is a web application created for lovers of books and movies. Users 
 
 
 ## Visuals
+![Screenshot #1](./assets/images/image%20(1).png)
 
+![Screenshot #2](./assets/images/image%20(2).png)
 
 
 ## Installation
@@ -32,3 +34,5 @@ This project is a web application created for lovers of books and movies. Users 
 
 ## Resources and Acknowledgments
 - [Movie app based on TMDB API | Day 17 | HTML CSS JS | 50Projects50Days](https://www.youtube.com/watch?v=9Bvt6BFf6_U)
+
+- We would like to acknowledge the assistance provided by Xpert, an AI Learning Assistant, in providing guidance and support throughout the development of this project. Xpert's insights and suggestions were invaluable in helping us overcome challenges and improve the quality of our work. (Acknowledgement written by Xpert)
