@@ -16,8 +16,8 @@
 <body>
 
   <!-- Header , Add title(Story Seeker),  -->
-  <header> StorySeeker</header>
-
+  <p class="title is-1">Storyseeker</p>
+  <p class="subtitle is-3">For Biblio-Cinephiles</p>
 
   <!-- Div , Explanation telling user to enter keywords,  -->
   <div>
@@ -35,9 +35,9 @@
   <!-- Div, Button, Add form or button -->
   <div>
     <form id="user-form">
-      <label for="keyword"> Input keywords here:</label><br>
-      <input type="text" id="search-input" name="keyword" autocomplete="on">
-      <input type="submit" id=btn>
+      <label for="keyword"> Input keywords here:</label><br> 
+      <input class="input is-success" type="text" id="search-input" name="keyword" autocomplete="on">
+      <input class="button is-primary" type="submit" value="Submit input">
     </form>
 
   </div>
@@ -84,7 +84,7 @@
       <div class="column" style="background-color:#aaa;">
         <h2>Your movies</h2>
         <div class="card">
-          <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Movie_poster" style="width:12.5%">
+          <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Movie_poster" style="width:8.5%">
         </div>
         <div class="container">
           <h4><b>Movie title</b></h4>
@@ -98,7 +98,7 @@
 
 
       <div class="card">
-        <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Book_cover" style="width:12.5%">
+        <img src="./assets/images/StorySeeker_placeholder_image.png" alt="Book_cover" style="width:8.5%">
         <div class="container">
           <h4><b>Book title</b></h4>
           <p>Book description</p>
@@ -124,8 +124,9 @@
 
 
 
+  
   <footer>Apis included:https://developer.themoviedb.org/docs/getting-started, https://openlibrary.org/developers/api.
-    Website by Heather Woolford, Adam Smith, and Kiki Kittredge</footer>
+   Storyseeker Website by Heather Woolford, Adam Smith, and Kiki Kittredge</footer>
   <!-- Footer, Add attribution for API's, Created by Heather, Kiki, and Adam -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
