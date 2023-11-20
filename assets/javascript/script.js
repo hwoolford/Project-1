@@ -78,7 +78,7 @@ function findBooks(search) {
     .then((response) => response.json())
     .then((data) => {
       // console.log(data.works);
-      if (data.works === 0) {
+      if (data.works.length === 0) {
         alert("no results.. try again");
       } else {
         outputList.innerHTML = "";
@@ -105,7 +105,9 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
   const searchInput = formInput.value;
   let storedHistory = JSON.parse(localStorage.getItem("searchTerm")) || [];
-  storedHistory.push(searchInput);
+  if (!storedHistory.includes(searchInput)) {
+    storedHistory.push(searchInput);
+  }
   localStorage.setItem("searchTerm", JSON.stringify(storedHistory));
   if (searchInput && searchInput !== "") {
     findMovies(searchInput);
